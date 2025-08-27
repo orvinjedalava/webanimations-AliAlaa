@@ -9,8 +9,21 @@ body {
   width: 100px;
   height: 100px;
   background-color: gold;
-  animation-name: move;
+
+  /* animation-name: move;
   animation-duration: 2s;
+  animation-delay: 0s;
+  animation-timing-function: linear;
+  animation-iteration-count: 2; */
+  /* animation-iteration-count: infinite; */
+  /* animation-direction: alternate; */
+  /* animation-direction: reverse; */
+  /* animation-direction: alternate-reverse; */
+  /* animation-play-state: running;  */
+  /* animation-play-state: paused; */
+
+  /* best practice is to put the name of the animation at the end */
+  animation: 2s 0s linear 2 alternate running move;
 }
 
 @keyframes move {
