@@ -10,6 +10,10 @@ body {
   box-sizing: border-box;
 }
 
+:root {
+  --duration: 12s;
+}
+
 .sky {
   background-image: linear-gradient(rgb(97, 191, 228), rgb(204, 233, 245));
   height: 50vh;
@@ -37,6 +41,8 @@ body {
   position: absolute;
   width: 200vw;
   height: 100%;
+  /* NOTE: street lines in the start and end of the animation should match */
+  animation: var(--duration) linear infinite moveStreet;
 }
 .ground .street .lines {
   position: absolute;
@@ -51,19 +57,24 @@ body {
 }
 
 .character {
-  --char-width: 25vh;
   position: absolute;
   bottom: 0;
   top: 0;
   left: 0;
   right: 0;
   margin: auto; /* This makes the character go in the middle of the screen */
-  background-image: url("./assets/7888220.png");
+  
+  /* common CSS sprite animation technique. Shifts background to the left */
+  --char-width: 25vh;
   background-size: calc(var(--char-width) * 8);
   background-position: calc(var(--char-width) * -4) 0px;
   background-repeat: no-repeat;
+  background-image: url("./assets/7888220.png");
+
   width: var(--char-width);
   aspect-ratio: 0.535;
+
+  animation: 1s steps(8, jump-none) infinite run;
 }
 
 .background {
@@ -89,4 +100,22 @@ body {
   height: 90%;
   bottom: 0px;
   left: 0;
+}
+
+@keyframes run {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: calc(var(--char-width) * -7) 0;
+  }
+}
+
+@keyframes moveStreet {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
