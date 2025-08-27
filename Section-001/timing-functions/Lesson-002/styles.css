@@ -16,9 +16,11 @@ body {
   width: 10px;
   height: 50px;
   background-color: greenyellow;
-  /* transition: left 2s steps(1, start);
-  transition: left 2s steps(1, end); */
-  transition: left 2s steps(4, start);
+  /* transition: left 2s linear; */
+  /* transition: left 2s linear(0, 0.25, 1); */
+  /* transition: left 2s linear(0, 0.25, 0.25, 0.5, 1); */
+  /* transition: left 2s linear(0, 0.25 75%, 1); */
+  transition: left 2s linear(0, 0.25 25% 75%, 1);
   left: -5px;
   position: absolute;
 }
