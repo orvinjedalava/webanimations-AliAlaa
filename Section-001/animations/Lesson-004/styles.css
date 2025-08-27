@@ -10,17 +10,17 @@ body {
   height: 100px;
   background-color: gold;
 
-  animation: 2s ease-in-out infinite alternate move,
-  0.3s ease-in-out infinite alternate bounce;
+  transform: rotate(45deg);
+  animation: 2s ease-in-out infinite alternate move;
 
   /* default is replace*/
   /* animation-composition: replace; */
-  animation-composition: add;
+  animation-composition: accumulate;
 }
 
 @keyframes move {
   0% {
-    transform: translateX(0);
+    transform: translateX(0) rotate(45deg);
   }
   100% {
     transform: rotate(0) translateX(calc(100vw - 140px));
@@ -29,11 +29,11 @@ body {
 
 @keyframes bounce {
   0% {
-    transform: translateY(0);
-    /* margin-top: 0px; */
+    /* transform: translateY(0); */
+    margin-top: 0px;
   }
   100% {
-    transform: translateY(100px);
-    /* margin-top: 100px; */
+    /* transform: translateY(100px); */
+    margin-top: 100px;
   }
 }
