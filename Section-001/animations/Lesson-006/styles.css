@@ -10,7 +10,8 @@ body {
   height: 100px;
   background-color: gold;
 
-  animation: 2s ease-in-out 1 alternate move;
+  /* notice the 2s delay */
+  animation: 2s 2s ease-in-out 1 alternate move;
 
   /* default is replace*/
   /* animation-composition: replace; */
@@ -19,35 +20,14 @@ body {
   /* animation-fill-mode: forwards; */
   /* animation-fill-mode: backwards; */
   animation-fill-mode: both;
-  animation-composition: add;
-  /* transform: translateX(50px); */
 }
 
 @keyframes move {
   0% {
     transform: translateX(0);
-  }
-  25% {
-    background-color: red;
-  }
-  50% {
-    transform: translateX(100px);
-  }
-  50% {
     background-color: blue;
-    animation-composition: replace; /* replace the background-color to blue instead of gold + blue */
   }
   100% {
     transform: rotate(0) translateX(calc(100vw - 140px));
   }
 }
-
-/* @keyframes move {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-    
-  }
-} */
