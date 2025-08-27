@@ -16,11 +16,11 @@ body {
   width: 10px;
   height: 50px;
   background-color: greenyellow;
-  /* transition: left 2s cubic-bezier(.52, 0, .99, 0); */
-  /* Bouncing effect when negative values are involved */
-  /* transition: left 2s cubic-bezier(.12, -0.47, .76, 1.44); */
-  /* transition: left 2s ease; */
-  transition: left 2s ease-in-out;
+  /* transition: left 2s linear; */
+  /* transition: left 2s linear(0, 0.25, 1); */
+  /* transition: left 2s linear(0, 0.25, 0.25, 0.5, 1); */
+  /* transition: left 2s linear(0, 0.25 75%, 1); */
+  transition: left 2s linear(0, 0.25 25% 75%, 1);
   left: -5px;
   position: absolute;
 }
