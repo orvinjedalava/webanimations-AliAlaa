@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
       delay: 1000,
       direction: 'alternate',
       fill: 'both',
-      iterations: Infinity,
+      iterations: 2,
       easing: 'linear',
       composite: 'add',
       iterationComposite: 'accumulate', // default is 'replace'. only works on firefox at this writing.
@@ -39,15 +39,36 @@ document.addEventListener("DOMContentLoaded", () => {
     button.addEventListener('click', () => {
       if (button.classList.contains('play')) {
         squareAnimation.play();
-      } else if (button.classList.contains('pause')) {
+      } 
+      if (button.classList.contains('pause')) {
         squareAnimation.pause();
-      } else if (button.classList.contains('cancel')) {
+      } 
+      if (button.classList.contains('cancel')) {
         squareAnimation.cancel();
-      } else if (button.classList.contains('reverse')) {
+      } 
+      if (button.classList.contains('reverse')) {
         squareAnimation.reverse();
-      } else if (button.classList.contains('finish')) {
+      } 
+      if (button.classList.contains('finish')) {
         squareAnimation.finish();
       } 
+      if (button.classList.contains('changeAnimation')) {
+        squareAnimation.effect.setKeyframes(
+          [
+            {
+              transform: 'translateY(0)',
+            },
+            {
+              backgroundColor: 'greenyellow',
+              offset: 0.8,
+            },
+            {
+              transform: 'translateY(calc(100vh - 100px)) rotate(360deg)',
+              backgroundColor: 'purple',
+            }
+          ]
+        );
+      }
       // else if (button.classList.contains('reset')) {
       //   squareAnimation.currentTime = 0;
       // }
@@ -60,5 +81,18 @@ document.addEventListener("DOMContentLoaded", () => {
   playbackRateInput.addEventListener('input', (e) => {
     squareAnimation.updatePlaybackRate(e.target.value);
     playbackRateValue.value = e.target.value;
+  });
+
+  const durationInput = document.getElementById('durationInput');
+  const durationInputValue = document.getElementById('durationInputValue');
+  
+  durationInput.addEventListener('input', (e) => {
+    squareAnimation.effect.updateTiming({ duration: +e.target.value });
+    durationInputValue.value = e.target.value;
+  });
+
+  const infiniteInput = document.getElementById('infiniteInput');
+  infiniteInput.addEventListener('change', (e) => {
+    squareAnimation.effect.updateTiming({ iterations: e.target.checked ? Infinity : 2 });
   });
 });
