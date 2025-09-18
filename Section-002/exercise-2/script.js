@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const street = document.querySelector('.street');
   const background = document.querySelector('.background');
   const foreground = document.querySelector('.foreground');
+  const carWrapper = document.querySelector('.car-wrapper');
   // will automatically play the animation if written in this way
   // you can pause it by calling squareAnimation.pause()
   // you can play it again by calling squareAnimation.play()
@@ -140,6 +141,31 @@ document.addEventListener("DOMContentLoaded", () => {
       runSlower();
     }
   },5000);
+
+  async function addNewCar() {
+    const car = document.createElement('div');
+    car.classList = 'car';
+    const carAnimation = car.animate(
+      [
+        { 
+          transform: 'translateX(-100vw)' 
+        },
+        { 
+          transform: 'translateX(100vw)' 
+        }
+      ],
+      {
+        duration: 2000,
+        easing: 'linear',
+      }
+    );
+    carWrapper.appendChild(car);
+    await carAnimation.finished;
+    car.remove();
+    // setTimeout(addNewCar, Math.random() * 5000);
+  }
+
+  addNewCar();
 
   document.addEventListener('keyup', (event) => {
     switch (event.code) {
