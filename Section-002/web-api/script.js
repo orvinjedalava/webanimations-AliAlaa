@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
       delay: 1000,
       direction: 'alternate',
       fill: 'both',
-      iterations: 2,
+      iterations: Infinity,
       easing: 'linear',
       composite: 'add',
       iterationComposite: 'accumulate', // default is 'replace'. only works on firefox at this writing.
@@ -69,22 +69,34 @@ document.addEventListener("DOMContentLoaded", () => {
           ]
         );
       }
-      // else if (button.classList.contains('reset')) {
-      //   squareAnimation.currentTime = 0;
-      // }
+      if (button.classList.contains('logInfo')) {
+        console.log('currentTime', squareAnimation.currentTime);
+        console.log('startTime', squareAnimation.startTime);
+        console.log('playbackRate', squareAnimation.playbackRate);
+        console.log('playState', squareAnimation.playState);
+        console.log('Keyframes', squareAnimation.effect.getKeyframes());
+        console.log('Timing', squareAnimation.effect.getTiming());
+        console.log('Computed Timing', squareAnimation.effect.getComputedTiming());
+      }
     });
   });
 
   const playbackRateInput = document.getElementById('playbackRateInput');
-  const playbackRateValue = document.getElementById('playbackRateInputValue');
+  const playbackRateInputValue = document.getElementById('playbackRateInputValue');
+
+  playbackRateInput.value = squareAnimation.playbackRate;
+  playbackRateInputValue.value = squareAnimation.playbackRate;
 
   playbackRateInput.addEventListener('input', (e) => {
     squareAnimation.updatePlaybackRate(e.target.value);
-    playbackRateValue.value = e.target.value;
+    playbackRateInputValue.value = e.target.value;
   });
 
   const durationInput = document.getElementById('durationInput');
   const durationInputValue = document.getElementById('durationInputValue');
+
+  durationInput.value = squareAnimation.effect.getComputedTiming().duration;
+  durationInputValue.value = squareAnimation.effect.getComputedTiming().duration;
   
   durationInput.addEventListener('input', (e) => {
     squareAnimation.effect.updateTiming({ duration: +e.target.value });
@@ -92,6 +104,9 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   const infiniteInput = document.getElementById('infiniteInput');
+
+  infiniteInput.checked = squareAnimation.effect.getComputedTiming().iterations === Infinity;
+  
   infiniteInput.addEventListener('change', (e) => {
     squareAnimation.effect.updateTiming({ iterations: e.target.checked ? Infinity : 2 });
   });
