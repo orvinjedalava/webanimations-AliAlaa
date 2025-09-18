@@ -1,5 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
   const character = document.querySelector('.character');
+  const street = document.querySelector('.street');
+  const background = document.querySelector('.background');
+  const foreground = document.querySelector('.foreground');
   // will automatically play the animation if written in this way
   // you can pause it by calling squareAnimation.pause()
   // you can play it again by calling squareAnimation.play()
@@ -16,6 +19,54 @@ document.addEventListener("DOMContentLoaded", () => {
       duration: 1000,
       iterations: Infinity,
       easing: 'steps(8, jump-none)'
+    }
+  );
+
+  const streetAnimation = street.animate(
+    [
+      {
+        transform: 'translateX(0)',
+      },
+      {
+        transform: 'translateX(-50%)',
+      }
+    ],
+    {
+      duration: 12000,
+      iterations: Infinity,
+      easing: 'linear'
+    }
+  );
+
+  const backgroundAnimation = background.animate(
+    [
+      {
+        transform: 'translateX(100%)',
+      },
+      {
+        transform: 'translateX(-100%)',
+      }
+    ],
+    {
+      duration: streetAnimation.effect.getComputedTiming().duration * 2,
+      iterations: Infinity,
+      easing: 'linear'
+    }
+  );
+
+  const foregroundAnimation = foreground.animate(
+    [
+      {
+        transform: 'translateX(200%)',
+      },
+      {
+        transform: 'translateX(-200%)',
+      }
+    ],
+    {
+      duration: streetAnimation.effect.getComputedTiming().duration * 1.5,
+      iterations: Infinity,
+      easing: 'linear'
     }
   );
 
