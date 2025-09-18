@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async() => {
   const element = document.querySelector(".square");
   // will automatically play the animation if written in this way
   // you can pause it by calling squareAnimation.pause()
@@ -156,4 +156,15 @@ document.addEventListener("DOMContentLoaded", () => {
   squareAnimation.play();
   console.log('playState after play()', squareAnimation.playState);
   console.log('animation pending after play()', squareAnimation.pending);
+
+  // await squareAnimation.finished;
+  // element.remove();
+  // console.log('Finished');
+  squareAnimation.addEventListener('finish', () => {
+    console.log(e);
+  });
+
+  squareAnimation.addEventListener('cancel', () => {
+    console.log(e);
+  });
 });
