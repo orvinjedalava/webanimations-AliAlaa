@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
       delay: 1000,
       direction: 'alternate',
       fill: 'both',
-      iterations: Infinity,
+      iterations: 2,
       easing: 'linear',
       composite: 'add',
       iterationComposite: 'accumulate', // default is 'replace'. only works on firefox at this writing.
@@ -106,8 +106,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const infiniteInput = document.getElementById('infiniteInput');
 
   infiniteInput.checked = squareAnimation.effect.getComputedTiming().iterations === Infinity;
-  
+
   infiniteInput.addEventListener('change', (e) => {
     squareAnimation.effect.updateTiming({ iterations: e.target.checked ? Infinity : 2 });
+  });
+
+  // squareAnimation.currentTime = 
+  //   squareAnimation.effect.getComputedTiming().activeDuration / 2
+  //   + squareAnimation.effect.getComputedTiming().delay;
+
+  const currentTimeInput = document.getElementById('currentTimeInput');
+  currentTimeInput.value = squareAnimation.currentTime;
+
+  currentTimeInput.addEventListener('input', (e) => {
+    squareAnimation.currentTime = e.target.value;
   });
 });
