@@ -1,5 +1,23 @@
 document.addEventListener("DOMContentLoaded", async() => {
   const element = document.querySelector(".square");
+  const element2 = document.querySelector(".square-3");
+
+  element2.animate(
+    [
+      { 
+        backgroundColor: 'red',
+      },
+      { 
+        backgroundColor: 'yellow',
+      },
+    ],
+    {
+      duration: 2000,
+      direction: 'alternate',
+      iterations: Infinity,
+    }
+  );
+
   // will automatically play the animation if written in this way
   // you can pause it by calling squareAnimation.pause()
   // you can play it again by calling squareAnimation.play()
@@ -143,19 +161,19 @@ document.addEventListener("DOMContentLoaded", async() => {
     squareAnimation.startTime = e.target.value;
   });
 
-  squareAnimation.pause();
-  console.log('playState after pause()', squareAnimation.playState);
-  console.log('animation pending after pause()', squareAnimation.pending);
+  // squareAnimation.pause();
+  // console.log('playState after pause()', squareAnimation.playState);
+  // console.log('animation pending after pause()', squareAnimation.pending);
 
-  squareAnimation.ready.then(() => {
-    console.log('Animation Ready', squareAnimation.playState);
-    console.log('playState after ready', squareAnimation.playState);
-    console.log('animation pending after ready', squareAnimation.pending);
-  });
+  // squareAnimation.ready.then(() => {
+  //   console.log('Animation Ready', squareAnimation.playState);
+  //   console.log('playState after ready', squareAnimation.playState);
+  //   console.log('animation pending after ready', squareAnimation.pending);
+  // });
 
-  squareAnimation.play();
-  console.log('playState after play()', squareAnimation.playState);
-  console.log('animation pending after play()', squareAnimation.pending);
+  // squareAnimation.play();
+  // console.log('playState after play()', squareAnimation.playState);
+  // console.log('animation pending after play()', squareAnimation.pending);
 
   // await squareAnimation.finished;
   // element.remove();
@@ -167,4 +185,26 @@ document.addEventListener("DOMContentLoaded", async() => {
   squareAnimation.addEventListener('cancel', () => {
     console.log(e);
   });
+
+  // console.log(document.getAnimations());
+  // console.log(element.getAnimations({
+  //   subtree: true,
+  // }));
+  // console.log(element2.getAnimations());
+
+  const speedButtons = document.querySelectorAll('.speedButton');
+  speedButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      if (button.classList.contains('decrease')) {
+        document.getAnimations().forEach(animation => {
+          animation.updatePlaybackRate(animation.playbackRate * 0.9);
+        });
+      }
+      if (button.classList.contains('increase')) {
+        document.getAnimations().forEach(animation => {
+          animation.updatePlaybackRate(animation.playbackRate / 0.9);
+        });
+      }
+    })
+  })
 });
