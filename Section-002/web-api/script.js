@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       duration: 3000,
       delay: 1000,
-      direction: 'normal',
+      direction: 'alternate',
       fill: 'both',
       iterations: Infinity,
       easing: 'linear',
@@ -32,5 +32,33 @@ document.addEventListener("DOMContentLoaded", () => {
       timeline: document.timeline
     }
   )
-  // squareAnimation.pause();
+  squareAnimation.pause();
+
+  const buttons = document.querySelectorAll("button");
+  buttons.forEach(button => {
+    button.addEventListener('click', () => {
+      if (button.classList.contains('play')) {
+        squareAnimation.play();
+      } else if (button.classList.contains('pause')) {
+        squareAnimation.pause();
+      } else if (button.classList.contains('cancel')) {
+        squareAnimation.cancel();
+      } else if (button.classList.contains('reverse')) {
+        squareAnimation.reverse();
+      } else if (button.classList.contains('finish')) {
+        squareAnimation.finish();
+      } 
+      // else if (button.classList.contains('reset')) {
+      //   squareAnimation.currentTime = 0;
+      // }
+    });
+  });
+
+  const playbackRateInput = document.getElementById('playbackRateInput');
+  const playbackRateValue = document.getElementById('playbackRateInputValue');
+
+  playbackRateInput.addEventListener('input', (e) => {
+    squareAnimation.updatePlaybackRate(e.target.value);
+    playbackRateValue.value = e.target.value;
+  });
 });
