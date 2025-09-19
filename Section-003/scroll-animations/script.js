@@ -46,6 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // rangeStart: "30%",
       // rangeEnd: "70%",
       timeline: viewTimeline,
+      // timeline: timeline,
     }
   );
 });
