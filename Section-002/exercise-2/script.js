@@ -169,6 +169,26 @@ document.addEventListener("DOMContentLoaded", () => {
         easing: 'linear',
       }
     );
+    //  pseudoelement only works on firefox at this writing
+    [":after", ":before"].forEach(pseudoElement => {
+      car.animate(
+        [
+          { 
+            transform: 'rotate(0)'
+          },
+          {
+            transform: 'rotate(360deg)'
+          }
+        ], {
+          id: 'car',
+          pseudoElement: pseudoElement,
+          duration: carAnimation.effect.getComputedTiming().duration / 4,
+          iterations: Infinity,
+          easing: 'linear'
+        }
+      );
+    });
+    
     carWrapper.appendChild(car);
     await carAnimation.finished;
     car.remove();
