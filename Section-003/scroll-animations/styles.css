@@ -25,8 +25,12 @@ body {
   width: 100px;
   height: 100px;
   background-color: gold;
-  animation: linear move;
+  animation: linear move both;
   animation-timeline: scroll();
+  animation-range: 100px;
+  /* animation-range-start: 20%;
+  animation-range-end: 80%; */
+  /* animation-range: 20% 80%; */
   position: sticky;
   top: 0;
 }
@@ -39,6 +43,6 @@ body {
 
 @keyframes changeBg {
   to {
-    background-color: coral;
+    background-color: black;
   }
 }
