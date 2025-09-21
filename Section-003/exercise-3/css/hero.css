@@ -1,5 +1,8 @@
 .hero {
   height: 100vh;
+
+  /* establishes a timeline for the hero section */
+  view-timeline: --hero-view;
 }
 .hero-inner {
   height: 100vh;

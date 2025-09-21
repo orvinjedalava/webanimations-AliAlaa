@@ -4,6 +4,9 @@ body {
   font-family: "Poppins", sans-serif;
   padding: 0;
   margin: 0;
+
+  /* increases the scope from the hero section to the body, so that nav can have access to the hero timeline */
+  timeline-scope: --hero-view;
 }
 
 * {
