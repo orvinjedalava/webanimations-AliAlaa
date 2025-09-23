@@ -121,6 +121,13 @@ document.addEventListener("DOMContentLoaded", () => {
     // Hide Modal if it was shown
     modal.classList.add("hide");
 
+    // Set the viewTransitionName for the modal to none to trigger a pop-out animation for the modal when hiding it
+    // because we set the viewTransitionName to "modal" when displaying it
+    // If we don't set it to none, the modal will pop-in again when hiding it because it will keep the "modal" viewTransitionName
+    // which will create a pop-in animation for the modal as it disappears
+    // So we set it to none to create a pop-out animation instead when hiding it
+    modal.style.viewTransitionName = "modal";
+
     // Loop through all alphabet letters and populate the letter buttons.
     letters.forEach((letter) => {
 
@@ -184,6 +191,10 @@ document.addEventListener("DOMContentLoaded", () => {
   function displayModal(result) {
     modalTitle.innerText = result === "win" ? "Good Job!" : "Game Over!";
     modal.classList.remove("hide");
+
+    // Set the viewTransitionName for the modal to be used later in the transition
+    // This will create a pop-in animation for the modal as it appears
+    // modal.style.viewTransitionName = "modal";
   }
 
   // Populates the DOM of the lives part, based on the lives variable, called every time we update the lives variable.
@@ -279,7 +290,10 @@ document.addEventListener("DOMContentLoaded", () => {
       chosenLetters = [];
 
       // Re-initialize the DOM to clear any old state
-      initDOM();
+      document.startViewTransition(() => {
+        initDOM();
+      });
+
     } catch (e) {
       console.log(e);
     }
