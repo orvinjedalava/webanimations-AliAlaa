@@ -123,19 +123,41 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Loop through all alphabet letters and populate the letter buttons.
     letters.forEach((letter) => {
+
+      // Count the occurrences of the letter in the answer to be used in the viewTransitionName for each letter button
+      // This will help in case the answer has multiple occurrences of the same letter, so we can have a unique viewTransitionName for each occurrence
+      // which will help in creating a better transition effect.
+      let occurrences = 0;
+      answer.forEach(l => {
+        if (l === letter) occurrences++;
+      });
+
       const letterWrapper = document.createElement("div");
       letterWrapper.classList.add(`letter`, `letter-${letter}`);
 
-      // Set the viewTransitionName for each letter button to be used later in the transition
-      letterWrapper.style.viewTransitionName = `letter-${letter}`;
+      const buttons = [];
 
       const button = document.createElement("button");
+      // Set the viewTransitionName for each letter button to be used later in the transition
+      button.style.viewTransitionName = `letter-${letter}-0`;
+
       button.innerText = letter.toUpperCase();
       button.addEventListener("click", () => {
         chooseLetter(letter);
       });
 
-      letterWrapper.append(button);
+      buttons.push(button);
+
+      if (occurrences > 1) {
+        Array(occurrences - 1).fill(null).forEach((n, i) => {
+          const buttonClone = button.cloneNode(true);
+          buttonClone.style.viewTransitionName = `letter-${letter}-${i + 1}`;
+          buttonClone.classList.add('clone');
+          buttons.push(buttonClone);
+        }); 
+      }
+
+      letterWrapper.append(...buttons);
 
       lettersEl.appendChild(letterWrapper);
     });
@@ -223,7 +245,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Populate the guess slots based on the chosen letter and the correct indexes.
   function populateGuess(letter, indexes) {
     const slots = document.querySelector(".guess.main").children;
-    indexes.forEach((index, _index) => {
+    indexes.forEach((pos, index) => {
       const slotItem = document.createElement("div");
       slotItem.innerText = letter.toUpperCase();
       slotItem.classList.add("letter", `letter-${letter}`);
@@ -235,9 +257,9 @@ document.addEventListener("DOMContentLoaded", () => {
       // The new element state will be taken after the DOM update
       // This will create a morphing effect between the two elements
       // as the properties like size, position, color, font... etc will be animated between the two elements
-      slotItem.style.viewTransitionName = `letter-${letter}`;
+      slotItem.style.viewTransitionName = `letter-${letter}-${index}`;
 
-      slots[index].appendChild(slotItem);
+      slots[pos].appendChild(slotItem);
     });
   }
 

@@ -59,9 +59,20 @@ body {
   cursor: pointer;
   transition: 0.3s;
   position: relative;
+
+  /* Make sure the original button is on top of the clone buttons because original button contains the event handler */
+  z-index: 10;
 }
 #letters .letter {
   position: relative;
+}
+
+/* Set the cloned buttons to be below the original buttons */
+#letters .letter button.clone {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 9;
 }
 
 #letters .letter button:hover {
