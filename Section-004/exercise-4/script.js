@@ -43,6 +43,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // indexes.length will be greater than zero if the chosen letter is correct.
     if (indexes.length > 0) {
+      // Set the viewTransitionName for the coins counter to be used later in the transition
+      // This will create a pop-out animation for the old coins count and a pop-in animation for the new coins count
+      // as the coins count is updated in the DOM after the transition starts
+      coinsTextEl.style.viewTransitionName = 'coins';
+
       points += 10; // add 10 points for every correct guess.
       indexes.forEach((i) => (guess[i] = letter)); // populate the user's guess array
 
@@ -71,8 +76,13 @@ document.addEventListener("DOMContentLoaded", () => {
     chosenLetters.push(letter); // keep track of chosen letters
 
     // Update the DOM based on the chosen letter, the correct indexes and the result (if we have a result)
-    document.startViewTransition(() => {
+    const transition = document.startViewTransition(() => {
       updateDOM(letter, indexes, result);
+    });
+
+    transition.finished.then(() => {
+      // Clear the viewTransitionName after the transition is finished to avoid affecting future transitions
+      coinsTextEl.style.viewTransitionName = "";
     });
     
   }
@@ -168,6 +178,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const heart = document.createElement("img");
         heart.src = "./assets/heart-balloon-svgrepo-com.svg";
         heart.alt = "";
+
+        heart.style.viewTransitionName = `life-${i}`;
+
         heartsEl.appendChild(heart);
       });
   }
@@ -177,11 +190,23 @@ document.addEventListener("DOMContentLoaded", () => {
   function buyLife() {
     if (points < LIFE_PRICE) return;
     coinsAudio.play();
+    // Set the viewTransitionName for the coins counter to be used later in the transition
+    // This will create a pop-out animation for the old coins count and a pop-in animation for the new coins count
+    // as the coins count is updated in the DOM after the transition starts
+    coinsTextEl.style.viewTransitionName = 'coins';
+
     points -= LIFE_PRICE;
     lives += 1;
 
     // Make sure to update the DOM after updating lives and points
-    updateDOM();
+    const transition = document.startViewTransition(() => {
+      updateDOM();
+    })
+    
+    transition.finished.then(() => {
+      // Clear the viewTransitionName after the transition is finished to avoid affecting future transitions
+      coinsTextEl.style.viewTransitionName = "";
+    });
   }
 
   // Populates the DOM of the coins part, based on the points variable, called every time we update the points variable.

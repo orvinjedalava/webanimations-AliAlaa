@@ -155,6 +155,11 @@ body {
   font-size: 1.6rem;
 }
 
+/* add the coin counter span to the view-transition-api */
+/* .coins .count .coins-count {
+  view-transition-name: coins;
+} */
+
 .lives .hearts {
   display: flex;
   margin-right: 20px;
@@ -223,8 +228,33 @@ body {
   }
 }
 
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 /* apply the pop-out animation to view transition elements that has old but no new view transition state */
 /* this means the element is going to be removed from the dom */
 ::view-transition-old(*):only-child {
   animation: 0.25s ease-out both pop-out;
+}
+
+/* apply the pop-in animation to view transition elements that has new but no old view transition state */
+/* this means the element is newly added to the dom */
+::view-transition-new(*):only-child {
+  animation: 0.25s ease-out both pop-in;
+}
+
+::view-transition-old(coins) {
+  animation: 0.25s ease-out both pop-out;
+}
+
+::view-transition-new(coins) {
+  animation: 0.25s ease-out both pop-in;
 }
