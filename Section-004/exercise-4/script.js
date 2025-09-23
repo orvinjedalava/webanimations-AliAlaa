@@ -71,7 +71,10 @@ document.addEventListener("DOMContentLoaded", () => {
     chosenLetters.push(letter); // keep track of chosen letters
 
     // Update the DOM based on the chosen letter, the correct indexes and the result (if we have a result)
-    updateDOM(letter, indexes, result);
+    document.startViewTransition(() => {
+      updateDOM(letter, indexes, result);
+    });
+    
   }
 
   // This function updates the DOM based on the chosen letter (if exists), the correct indexes (if exists) and the final result (if exists)
@@ -112,6 +115,9 @@ document.addEventListener("DOMContentLoaded", () => {
     letters.forEach((letter) => {
       const letterWrapper = document.createElement("div");
       letterWrapper.classList.add(`letter`, `letter-${letter}`);
+
+      // Set the viewTransitionName for each letter button to be used later in the transition
+      letterWrapper.style.viewTransitionName = `letter-${letter}`;
 
       const button = document.createElement("button");
       button.innerText = letter.toUpperCase();
@@ -196,6 +202,16 @@ document.addEventListener("DOMContentLoaded", () => {
       const slotItem = document.createElement("div");
       slotItem.innerText = letter.toUpperCase();
       slotItem.classList.add("letter", `letter-${letter}`);
+
+      // Set the viewTransitionName for each populated letter to be used later in the transition
+      // the original element (in the letter buttons) and the new element (in the guess slot) 
+      // will have the same viewTransitionName which is "letter-[the letter]"
+      // The original element state will be taken before the DOM update
+      // The new element state will be taken after the DOM update
+      // This will create a morphing effect between the two elements
+      // as the properties like size, position, color, font... etc will be animated between the two elements
+      slotItem.style.viewTransitionName = `letter-${letter}`;
+
       slots[index].appendChild(slotItem);
     });
   }
